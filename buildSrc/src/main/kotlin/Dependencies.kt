@@ -51,10 +51,6 @@ object AndroidX {
     const val paging = "androidx.paging:paging-runtime:${Versions.paging}"
 }
 
-/**
-hilt           : "com.google.dagger:hilt-android:${versions.libraries.hilt}",
-hilt_kapt      : "com.google.dagger:hilt-android-compiler:${versions.libraries.hilt}",
- */
 object Libraries {
     private object Versions {
         const val material = "1.2.1"
