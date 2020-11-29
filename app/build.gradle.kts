@@ -68,6 +68,7 @@ dependencies {
     implementation(AndroidX.lifecycleViewmodel)
     implementation(AndroidX.lifecycleLivedata)
     implementation(AndroidX.lifecycleRuntime)
+    implementation(AndroidX.paging)
 
     // images
     implementation(Libraries.glide)

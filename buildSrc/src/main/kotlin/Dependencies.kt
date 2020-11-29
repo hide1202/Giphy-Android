@@ -32,6 +32,7 @@ object AndroidX {
         const val constraintLayout = "2.0.4"
         const val lifecycle = "2.2.0"
         const val hilt = "1.0.0-alpha02"
+        const val paging = "3.0.0-alpha07"
     }
 
     const val coreKtx = "androidx.core:core-ktx:${Versions.coreKtx}"
@@ -46,6 +47,8 @@ object AndroidX {
 
     const val hiltLifecycle = "androidx.hilt:hilt-lifecycle-viewmodel:${Versions.hilt}"
     const val hiltKapt = "androidx.hilt:hilt-compiler:${Versions.hilt}"
+
+    const val paging = "androidx.paging:paging-runtime:${Versions.paging}"
 }
 
 /**

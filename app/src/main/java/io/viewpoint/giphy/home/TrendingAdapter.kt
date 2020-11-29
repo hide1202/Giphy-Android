@@ -1,8 +1,11 @@
 package io.viewpoint.giphy.home
 
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.facebook.shimmer.Shimmer
@@ -11,15 +14,13 @@ import io.viewpoint.giphy.R
 import io.viewpoint.giphy.databinding.ItemTrendingBinding
 import io.viewpoint.giphy.domain.model.Media
 
-class TrendingAdapter : RecyclerView.Adapter<TrendingAdapter.TrendingViewHolder>() {
-    private val items = mutableListOf<Media>()
+private val diffCallback = object : DiffUtil.ItemCallback<Media>() {
+    override fun areItemsTheSame(oldItem: Media, newItem: Media): Boolean = oldItem === newItem
 
-    fun updateItems(newItems: List<Media>) {
-        items.clear()
-        items.addAll(newItems)
+    override fun areContentsTheSame(oldItem: Media, newItem: Media): Boolean = oldItem == newItem
+}
 
-        notifyDataSetChanged()
-    }
+class TrendingAdapter : PagingDataAdapter<Media, TrendingAdapter.TrendingViewHolder>(diffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrendingViewHolder =
         TrendingViewHolder(
@@ -44,7 +45,7 @@ class TrendingAdapter : RecyclerView.Adapter<TrendingAdapter.TrendingViewHolder>
                 .build()
 
             Glide.with(context)
-                .load(items[position].url)
+                .load(getItem(position)?.urlWithoutQuery)
                 .placeholder(ShimmerDrawable().apply {
                     setShimmer(shimmer)
                 })
@@ -54,8 +55,15 @@ class TrendingAdapter : RecyclerView.Adapter<TrendingAdapter.TrendingViewHolder>
         }
     }
 
-    override fun getItemCount(): Int = items.size
-
     class TrendingViewHolder(val binding: ItemTrendingBinding) :
         RecyclerView.ViewHolder(binding.root)
 }
+
+/**
+ * remove query parameters for Glide's cache
+ */
+private val Media.urlWithoutQuery: Uri?
+    get() = Uri.parse(this.url)
+        .buildUpon()
+        .clearQuery()
+        .build()

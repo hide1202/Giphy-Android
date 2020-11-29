@@ -9,6 +9,8 @@ import io.viewpoint.giphy.databinding.ActivityMainBinding
 import io.viewpoint.giphy.domain.MediaType
 import io.viewpoint.giphy.domain.repository.MediaRepository
 import io.viewpoint.giphy.home.TrendingAdapter
+import io.viewpoint.giphy.home.TrendingPager
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -31,8 +33,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun loadApi() {
+        val pager = TrendingPager(mediaRepository)
         lifecycleScope.launch {
-            trendingAdapter.updateItems(mediaRepository.getTrendings(MediaType.GIF))
+            pager.withMediaType(MediaType.GIF)
+                .flow
+                .collect {
+                    trendingAdapter.submitData(it)
+                }
         }
     }
 }
