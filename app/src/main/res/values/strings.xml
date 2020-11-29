@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Giphy-Android</string>
+    <string name="trendings">Trendings</string>
 </resources>
