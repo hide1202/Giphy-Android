@@ -24,7 +24,9 @@ class GiphyMediaRepository @Inject constructor(
             .map {
                 Media(
                     type = type,
-                    url = it.images?.fixed_height?.url
+                    title = it.title ?: "",
+                    previewUrl = it.images?.preview_gif?.url,
+                    url = it.images?.fixed_height_downsampled?.url
                 )
             }.let {
                 val totalPage = pagination.total_count / pagination.count

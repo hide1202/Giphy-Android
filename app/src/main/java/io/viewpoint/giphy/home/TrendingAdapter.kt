@@ -8,11 +8,10 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.facebook.shimmer.Shimmer
-import com.facebook.shimmer.ShimmerDrawable
 import io.viewpoint.giphy.R
 import io.viewpoint.giphy.databinding.ItemTrendingBinding
 import io.viewpoint.giphy.domain.model.Media
+import io.viewpoint.giphy.extensions.placeHolderWithShimmer
 
 private val diffCallback = object : DiffUtil.ItemCallback<Media>() {
     override fun areItemsTheSame(oldItem: Media, newItem: Media): Boolean = oldItem === newItem
@@ -20,7 +19,9 @@ private val diffCallback = object : DiffUtil.ItemCallback<Media>() {
     override fun areContentsTheSame(oldItem: Media, newItem: Media): Boolean = oldItem == newItem
 }
 
-class TrendingAdapter : PagingDataAdapter<Media, TrendingAdapter.TrendingViewHolder>(diffCallback) {
+class TrendingAdapter(
+    private val callback: Callback
+) : PagingDataAdapter<Media, TrendingAdapter.TrendingViewHolder>(diffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrendingViewHolder =
         TrendingViewHolder(
@@ -30,25 +31,23 @@ class TrendingAdapter : PagingDataAdapter<Media, TrendingAdapter.TrendingViewHol
                 parent,
                 false
             )
-        )
+        ).also { vh ->
+            vh.binding.image.setOnClickListener {
+                val position = vh.bindingAdapterPosition.takeIf {
+                    it != RecyclerView.NO_POSITION
+                } ?: return@setOnClickListener
+                val item = getItem(position) ?: return@setOnClickListener
+                callback.onGifClicked(item)
+            }
+        }
 
     override fun onBindViewHolder(holder: TrendingViewHolder, position: Int) {
         with(holder.binding) {
             val context = this.root.context
 
-            val shimmer = Shimmer.AlphaHighlightBuilder()
-                .setDuration(1300)
-                .setBaseAlpha(0.3f)
-                .setHighlightAlpha(0.6f)
-                .setDirection(Shimmer.Direction.LEFT_TO_RIGHT)
-                .setAutoStart(true)
-                .build()
-
             Glide.with(context)
-                .load(getItem(position)?.urlWithoutQuery)
-                .placeholder(ShimmerDrawable().apply {
-                    setShimmer(shimmer)
-                })
+                .load(getItem(position)?.previewUrlWithoutQuery)
+                .placeHolderWithShimmer()
                 .into(image)
 
             executePendingBindings()
@@ -57,6 +56,10 @@ class TrendingAdapter : PagingDataAdapter<Media, TrendingAdapter.TrendingViewHol
 
     class TrendingViewHolder(val binding: ItemTrendingBinding) :
         RecyclerView.ViewHolder(binding.root)
+
+    interface Callback {
+        fun onGifClicked(media: Media)
+    }
 }
 
 /**
@@ -64,6 +67,15 @@ class TrendingAdapter : PagingDataAdapter<Media, TrendingAdapter.TrendingViewHol
  */
 private val Media.urlWithoutQuery: Uri?
     get() = Uri.parse(this.url)
+        .buildUpon()
+        .clearQuery()
+        .build()
+
+/**
+ * remove query parameters for Glide's cache
+ */
+private val Media.previewUrlWithoutQuery: Uri?
+    get() = Uri.parse(this.previewUrl)
         .buildUpon()
         .clearQuery()
         .build()
