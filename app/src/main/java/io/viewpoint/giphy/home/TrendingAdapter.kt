@@ -37,7 +37,7 @@ class TrendingAdapter(
                     it != RecyclerView.NO_POSITION
                 } ?: return@setOnClickListener
                 val item = getItem(position) ?: return@setOnClickListener
-                callback.onGifClicked(item)
+                callback.onGifClicked(vh.binding, item)
             }
         }
 
@@ -58,7 +58,7 @@ class TrendingAdapter(
         RecyclerView.ViewHolder(binding.root)
 
     interface Callback {
-        fun onGifClicked(media: Media)
+        fun onGifClicked(binding: ItemTrendingBinding, media: Media)
     }
 }
 
