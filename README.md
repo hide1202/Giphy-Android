@@ -4,7 +4,7 @@
 - Application for the practice of android development using Giphy API
 
 ## Prerequisites
-- Android Studio 4.2 Canary 16
+- Android Studio Arctic Fox | 2020.3.1 Canary 1
 
 ## How to run
 - Create a file in the root of project with `external.properties` name.
