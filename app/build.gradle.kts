@@ -62,6 +62,8 @@ dependencies {
 
     // androidx or google
     implementation(AndroidX.coreKtx)
+    implementation(AndroidX.activity)
+    implementation(AndroidX.fragment)
     implementation(AndroidX.appCompat)
     implementation(Libraries.material)
     implementation(AndroidX.constraintLayout)
@@ -69,6 +71,7 @@ dependencies {
     implementation(AndroidX.lifecycleLivedata)
     implementation(AndroidX.lifecycleRuntime)
     implementation(AndroidX.paging)
+    implementation(AndroidX.swipeRefreshLayout)
 
     // images
     implementation(Libraries.glide)

@@ -23,6 +23,7 @@ class GiphyMediaRepository @Inject constructor(
             .data
             .map {
                 Media(
+                    id = it.id,
                     type = type,
                     title = it.title ?: "",
                     previewUrl = it.images?.preview_gif?.url,

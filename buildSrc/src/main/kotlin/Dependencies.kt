@@ -28,14 +28,19 @@ object Android {
 object AndroidX {
     private object Versions {
         const val coreKtx = "1.3.2"
+        const val activity = "1.1.0"
+        const val fragment = "1.2.5"
         const val appCompat = "1.2.0"
         const val constraintLayout = "2.0.4"
         const val lifecycle = "2.2.0"
         const val hilt = "1.0.0-alpha02"
         const val paging = "3.0.0-alpha09"
+        const val swipeRefreshLayout = "1.1.0"
     }
 
     const val coreKtx = "androidx.core:core-ktx:${Versions.coreKtx}"
+    const val activity = "androidx.activity:activity-ktx:${Versions.activity}"
+    const val fragment = "androidx.fragment:fragment-ktx:${Versions.fragment}"
     const val appCompat = "androidx.appcompat:appcompat:${Versions.appCompat}"
     const val constraintLayout =
         "androidx.constraintlayout:constraintlayout:${Versions.constraintLayout}"
@@ -49,6 +54,9 @@ object AndroidX {
     const val hiltKapt = "androidx.hilt:hilt-compiler:${Versions.hilt}"
 
     const val paging = "androidx.paging:paging-runtime:${Versions.paging}"
+
+    const val swipeRefreshLayout =
+        "androidx.swiperefreshlayout:swiperefreshlayout:${Versions.swipeRefreshLayout}"
 }
 
 object Libraries {

@@ -14,7 +14,7 @@ import io.viewpoint.giphy.domain.model.Media
 import io.viewpoint.giphy.extensions.placeHolderWithShimmer
 
 private val diffCallback = object : DiffUtil.ItemCallback<Media>() {
-    override fun areItemsTheSame(oldItem: Media, newItem: Media): Boolean = oldItem === newItem
+    override fun areItemsTheSame(oldItem: Media, newItem: Media): Boolean = oldItem.id == newItem.id
 
     override fun areContentsTheSame(oldItem: Media, newItem: Media): Boolean = oldItem == newItem
 }
