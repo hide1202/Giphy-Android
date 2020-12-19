@@ -14,3 +14,5 @@
 giphy.api.key=YOUR_API_KEY
 ```
 
+## References
+- Giphy API : https://developers.giphy.com/docs/api#quick-start-guide
