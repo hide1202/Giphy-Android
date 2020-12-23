@@ -10,7 +10,7 @@ object CommonVersions {
 
 object BuildPlugins {
     object Versions {
-        const val buildToolsVersion = "7.0.0-alpha01"
+        const val buildToolsVersion = "7.0.0-alpha03"
     }
 
     const val androidGradlePlugin = "com.android.tools.build:gradle:${Versions.buildToolsVersion}"
